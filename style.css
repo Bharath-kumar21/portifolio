@@ -266,38 +266,6 @@
   padding: 0;
 }
 
-/* Fiery Mouse Click Cursor */
-html.fire-active,
-html.fire-active *,
-body.fire-active,
-body.fire-active *,
-*:active,
-*:active * {
-  cursor: url("fire-cursor-32.png") 11 6,
-          default !important;
-}
-
-/* Flame Click Sparks */
-.fire-spark {
-  position: fixed;
-  pointer-events: none;
-  z-index: 99999;
-  border-radius: 2px;
-  box-shadow: 0 0 6px #ff6600, 0 0 10px #ff2200;
-  animation: spark-fly 0.4s ease-out forwards;
-}
-
-@keyframes spark-fly {
-  0% {
-    transform: translate(0, 0) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--dx), var(--dy)) scale(0.2);
-    opacity: 0;
-  }
-}
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
