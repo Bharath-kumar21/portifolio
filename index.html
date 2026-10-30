@@ -1,127 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>Portifolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&family=Cinzel:wght@400..900&family=Climate+Crisis:YEAR@1979&family=Notable&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Talagana Bharath Kumar — Full-Stack Developer, AI & Data Engineering enthusiast portfolio.">
+  <meta name="author" content="Talagana Bharath Kumar">
+  <title>Talagana Bharath Kumar — Portfolio</title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <div class="w" id="home">
+    
+    <!-- Top Navigation Island (Centered) -->
     <nav>
-        <h1 class="log">BHARATH</h1>
-        <ol class="links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Skills</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li>
-        </ol>
-        <div class="menu"><i class="fa-solid fa-bars"></i></div>
-
+      <a class="logo" href="#home">TBK</a>
+      <div class="r">
+        <a href="#home">Home</a>
+        <a href="#work">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
-    <div class="main">
-        <section class="herosection">
-            <div class="greet">
-                <h5>Hello!</h5>
-                <h1>I'm Bharath Kumar </h1>
-                <h2>Full-Stack Developer</h2>
-            </div>
 
-            <div class="img-block">
-                <img src="./image.png" alt="">
-            </div>
-        </section>
-    </div>
-    <div class="about">
-        <p>A B.Tech Computer Science & Engineering graduate with a strong interest in Full-Stack Development, AI,
-            and Machine Learning. Currently, I’m focusing on strengthening my skills in Python, React, Django, SQL, DSA,
-            and AI application development.
-
-            I enjoy building practical, user-focused applications—from full-stack web platforms to AI-powered tools and
-            automation systems. I’m looking to start my career as a Software Developer, while continuing to grow in AI
-            and backend engineering.</p>
-        
-    </div>
-
-
-    <div class="Academics">
-        <h1 class="aca">Academics</h1>
-        <div class="cards-container">
-            <div class="row">
-            <div class="card">
-                <div class="col-12 sm-2 md-2">
-                <h4 class="card-year"><b>2026</b></h4>
-                <h4 class="">Python Full-Stack trainee</h4>
-                <h5>Codegnan</h5>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="col-12 sm-2 md-3">
-                <h4><b>2022-2026</b></h4>
-                <h4>Bachelors Degree</h4>
-                <h5>Andhra University <br> College of Engineering</h5>
-                </div>
-            </div>
-            <div class="card">
-                <div class="col-12 sm-2 md-3">
-                <h4><b>2020-2022</b></h4>
-                <h4>Intermediate Education</h4>
-                <h5>Sri Chaitanya Junior College</h5>
-                </div>
-            </div>
+    <!-- Theme & Color Controls Dock (Right Edge) -->
+    <div class="theme-controls">
+      <!-- Color Palette Switcher -->
+      <div class="palette-box">
+        <button class="palette-btn" id="palette-btn" aria-label="Change theme colors" title="Theme colors">🎨</button>
+        <div class="palette-dropdown" id="palette-dropdown" aria-hidden="true">
+          <span class="palette-label m">Theme Colors</span>
+          <div class="swatches-row">
+            <button class="swatch-pill active" data-color="default" title="Default Cream" style="background:#efeee9;" aria-label="Default Cream"></button>
+            <button class="swatch-pill" data-color="sage" title="Sage Green" style="background:#cde0c9;" aria-label="Sage Green"></button>
+            <button class="swatch-pill" data-color="ocean" title="Ice Blue" style="background:#c4dcf3;" aria-label="Ice Blue"></button>
+            <button class="swatch-pill" data-color="sand" title="Golden Sand" style="background:#fae3b4;" aria-label="Golden Sand"></button>
+            <button class="swatch-pill" data-color="rose" title="Blush Rose" style="background:#f6ccd4;" aria-label="Blush Rose"></button>
+            <button class="swatch-pill" data-color="lavender" title="Lavender Mist" style="background:#d8c8f0;" aria-label="Lavender Mist"></button>
+            <label class="swatch-pill swatch-picker" title="Pick Custom Color" aria-label="Pick Custom Color">
+              <input type="color" id="custom-color-input" value="#efeee9" aria-label="Pick custom color">
+              <span class="picker-icon">✦</span>
+            </label>
+          </div>
         </div>
+      </div>
+
+      <span class="theme-divider"></span>
+
+      <!-- Dark Mode Toggle Button -->
+      <button class="tg" id="tg" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
     </div>
+
+    <!-- Hero Title -->
+    <h1 class="hero-title">BHARATH<br>KUMAR</h1>
+
+    <!-- Intro & Status Grid -->
+    <div class="intro">
+      <div class="big">
+        <span class="lab m">You’ll like it:</span>
+        Talagana Bharath Kumar, a full-stack developer who builds web apps, dashboards and databases that solve real problems, and is growing into machine learning and AI.
+        <BR> Computer Science graduate, Andhra University, class of 2026.
+      </div>
+      <div>
+        <div class="status-block">
+          <span class="lab m">Status</span>
+          <p class="status-line"><span class="dot"></span>Available for projects &amp; roles</p>
+        </div>
+        <span class="lab m">Socials:</span>
+        <div class="soc">
+          <a href="https://github.com/Bharath-kumar21" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a>
+          <a href="https://www.linkedin.com/in/bharath-kumar-talagana-859a24250" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a>
+          <a href="mailto:bharatkumartalagana@gmail.com">Email <span>↗</span></a>
+        </div>
+      </div>
     </div>
-    <section class="skills">
 
-            <div class="skills-track">
+    <!-- Featured Projects Section -->
+    <section id="work">
+      <div class="hd m">
+        <span>Featured projects:</span>
+        <span>05 / 2026</span>
+      </div>
+      <div class="grid">
+        <!-- Project 01 -->
+        <a class="pj" href="https://citypulse-2nqlvftecxb3vzqriaib9w.streamlit.app/" target="_blank" rel="noopener noreferrer">
+          <div class="art g1">
+            <b>01</b>
+            <span class="tag m">Python · Streamlit · APIs</span>
+          </div>
+          <div class="cap">
+            <span>City Pulse</span>
+            <span class="m">Project 01 / 2026</span>
+          </div>
+          <p class="sub">Live urban analytics &amp; metric visualizer</p>
+        </a>
 
-                <span>PYTHON</span> ·
-                <span>MYSQL</span> ·
-                <span>FLASK</span> ·
-                <span>HTML</span> ·
-                <span>CSS</span> ·
-                <span>BOOTSTRAP</span> ·
-                <span>JAVASCRIPT</span> ·
-                <span>REACT</span> ·
-                <span>DJANGO</span> ·
-                <span>GIT</span> ·
-                <span>DOCKER</span> ·
-                <span>RAG</span> ·
+        <!-- Project 02 -->
+        <a class="pj" href="https://bharath-kumar21.github.io/Unisearch/" target="_blank" rel="noopener noreferrer">
+          <div class="art g2">
+            <b>02</b>
+            <span class="tag m">React · Node · MongoDB</span>
+          </div>
+          <div class="cap">
+            <span>UniSearch India</span>
+            <span class="m">Project 02 / 2026</span>
+          </div>
+          <p class="sub">Indian university search and discovery platform</p>
+        </a>
 
-                <!-- Duplicate -->
-                <span>PYTHON</span> ·
-                <span>MYSQL</span> ·
-                <span>FLASK</span> ·
-                <span>HTML</span> ·
-                <span>CSS</span> ·
-                <span>BOOTSTRAP</span> ·
-                <span>JAVASCRIPT</span> ·
-                <span>REACT</span> ·
-                <span>DJANGO</span> ·
-                <span>GIT</span> ·
-                <span>DOCKER</span> ·
-                <span>RAG</span> ·
+        <!-- Project 03 -->
+        <a class="pj" href="https://bharath04.pythonanywhere.com" target="_blank" rel="noopener noreferrer">
+          <div class="art g3">
+            <b>03</b>
+            <span class="tag m">Flask · SQLite</span>
+          </div>
+          <div class="cap">
+            <span>Smart Cart</span>
+            <span class="m">Project 03 / 2026</span>
+          </div>
+          <p class="sub">Dynamic e-commerce shopping cart system</p>
+        </a>
 
-            </div>
+        <!-- Project 04 -->
+        <a class="pj" href="https://breakingbad-progress.vercel.app" target="_blank" rel="noopener noreferrer">
+          <div class="art g4">
+            <b>04</b>
+            <span class="tag m">React · Vite</span>
+          </div>
+          <div class="cap">
+            <span>Breaking Bad Progress</span>
+            <span class="m">Project 04 / 2026</span>
+          </div>
+          <p class="sub">Interactive series and episode tracker</p>
+        </a>
 
-        </section>
-    <script src="https://kit.fontawesome.com/8ca9c9be44.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <footer>
+        <!-- Project 05 -->
+        <a class="pj" href="https://github.com/Bharath-kumar21/Banking-Management-SQL" target="_blank" rel="noopener noreferrer">
+          <div class="art g5">
+            <b>05</b>
+            <span class="tag m">MySQL · SQL</span>
+          </div>
+          <div class="cap">
+            <span>Banking Management System</span>
+            <span class="m">Project 05 / 2026</span>
+          </div>
+          <p class="sub">Relational database core banking engine</p>
+        </a>
 
-    </footer>    
+        <!-- Project 06 (More) -->
+        <a class="pj" href="https://github.com/Bharath-kumar21" target="_blank" rel="noopener noreferrer">
+          <div class="art g6">
+            <b>↗</b>
+            <span class="tag m">github.com/Bharath-kumar21</span>
+          </div>
+          <div class="cap">
+            <span>More on GitHub</span>
+            <span class="m">All repositories</span>
+          </div>
+          <p class="sub">Open-source code, experiments &amp; contributions</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+      <div class="hd m">
+        <span>Services:</span>
+        <span>What I do</span>
+      </div>
+      <div class="sv">
+        <p class="desc">I design, build and ship web products end to end, and add machine learning where it genuinely helps. Clear scope, fixed prices, and a working demo at every step.</p>
+        <ol>
+          <li><span class="num m">01.</span>Web development</li>
+          <li><span class="num m">02.</span>Data dashboards</li>
+          <li><span class="num m">03.</span>Database design</li>
+          <li><span class="num m">04.</span>Automation &amp; AI</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="stack">
+      <div class="hd m">
+        <span>Tech I work with:</span>
+        <span>Stack</span>
+      </div>
+      <div class="tech">
+        <span>React</span>
+        <span>Node.js</span>
+        <span>Flask</span>
+        <span>Python</span>
+        <span>Django</span>
+        <span>MongoDB</span>
+        <span>MySQL</span>
+        <span>SQLite</span>
+        <span>Streamlit</span>
+        <span>Pandas</span>
+        <span>Docker</span>
+        <span>Git</span>
+        <span>REST APIs</span>
+        <span>JWT</span>
+        <span>RAG</span>
+        <span>JavaScript</span>
+        <span>HTML5 &amp; CSS3</span>
+      </div>
+    </section>
+
+    <!-- Contact & Call to Action -->
+    <section id="contact" class="cta">
+      <div class="hd m">
+        <span>Contact:</span>
+        <span>Get in touch</span>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-main">
+          <p class="contact-lead">Have a project in mind? Let’s build something people will use. Reach out and I’ll reply within a day.</p>
+          <div class="contact-box">
+            <a class="mail m" href="mailto:bharatkumartalagana@gmail.com">bharatkumartalagana@gmail.com</a>
+            <button class="copy-btn m" id="copy-email-btn" type="button" aria-label="Copy email address">Copy Email</button>
+          </div>
+        </div>
+        <div class="contact-side">
+          <span class="lab m">Socials:</span>
+          <div class="social-btn-group">
+            <a class="social-btn m" href="https://www.instagram.com/thestr4wh4t/" target="_blank" rel="noopener noreferrer">
+              <span>Instagram</span> <span>↗</span>
+            </a>
+            <a class="social-btn m" href="https://x.com/Bharath2OO4" target="_blank" rel="noopener noreferrer">
+              <span>X</span> <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="m">
+        <span>//FUELED BY CURIOSITY</span>
+        <a class="ul" href="#home">Back to top ↑</a>
+      </footer>
+    </section>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast m" role="status" aria-live="polite">Email copied to clipboard!</div>
+
+  <!-- Vanilla JavaScript -->
+  <script src="script.js"></script>
 </body>
-
 </html>
