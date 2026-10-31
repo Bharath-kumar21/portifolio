@@ -269,31 +269,37 @@
       }
     });
 
-    // Click effect: punch cursor + spawn randomized Spider-Sense tingling burst
+    // Click & Touch effect: punch cursor + spawn randomized Spider-Sense tingling burst
+    var lastBurstTime = 0;
+    function handleBurstTrigger(clientX, clientY) {
+      var now = Date.now();
+      if (now - lastBurstTime < 120) return;
+      lastBurstTime = now;
+      if (cursor) cursor.classList.add("cursor-active");
+      spawnSpiderSense(clientX, clientY);
+    }
+
     window.addEventListener("mousedown", function (e) {
-      cursor.classList.add("cursor-active");
-      spawnSpiderSense(e.clientX, e.clientY);
+      handleBurstTrigger(e.clientX, e.clientY);
     });
 
+    window.addEventListener("touchstart", function (e) {
+      if (e.touches && e.touches[0]) {
+        handleBurstTrigger(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
     window.addEventListener("mouseup", function () {
-      cursor.classList.remove("cursor-active");
+      if (cursor) cursor.classList.remove("cursor-active");
+    });
+
+    window.addEventListener("touchend", function () {
+      if (cursor) cursor.classList.remove("cursor-active");
     });
   }
 
-  // Spider-Verse Colorway Palettes for randomized tingling aura
-  var spiderColorways = [
-    { c1: "#ff007f", c2: "#00f0ff", hue: "0deg", sparks: ["#ff007f", "#00f0ff", "#ffffff", "#ff2a85"] }, // Classic Comic
-    { c1: "#ff0033", c2: "#ffd700", hue: "320deg", sparks: ["#ff0033", "#ffd700", "#ff4500", "#ffffff"] }, // Miles Morales
-    { c1: "#00e5ff", c2: "#ff0055", hue: "190deg", sparks: ["#00e5ff", "#ff0055", "#00ffff", "#ff1493"] }, // Spider-Man 2099
-    { c1: "#9d00ff", c2: "#00ffcc", hue: "75deg", sparks: ["#9d00ff", "#00ffcc", "#d800ff", "#00ffff"] }, // Symbiote / Violet
-    { c1: "#ff00aa", c2: "#ffea00", hue: "290deg", sparks: ["#ff00aa", "#ffea00", "#ff66cc", "#ffffff"] }  // Spider-Punk
-  ];
-
   function spawnSpiderSense(x, y) {
-    // 1. Pick random Spider-Verse colorway
-    var palette = spiderColorways[Math.floor(Math.random() * spiderColorways.length)];
-
-    // 2. Random pattern archetype (0: Directional Crown, 1: Opposite/Inverted Arc, 2: Dual 360 Omni-Warning, 3: Chromatic Double Jitter)
+    // 1. Random pattern archetype (0: Directional Crown, 1: Opposite/Inverted Arc, 2: Dual 360 Omni-Warning, 3: Double Jitter)
     var patternType = Math.floor(Math.random() * 4);
 
     // Random base angles & mirror flip
@@ -304,7 +310,7 @@
 
     var bursts = [];
 
-    function createBurstEl(rot, flip, sc, hueShift) {
+    function createBurstEl(rot, flip, sc) {
       var el = document.createElement("div");
       el.className = "click-burst";
       el.style.left = x + "px";
@@ -312,9 +318,6 @@
       el.style.setProperty("--rot", rot + "deg");
       el.style.setProperty("--flip", flip);
       el.style.setProperty("--scale", sc);
-      el.style.setProperty("--hue", hueShift || palette.hue);
-      el.style.setProperty("--c1", palette.c1);
-      el.style.setProperty("--c2", palette.c2);
       document.body.appendChild(el);
       bursts.push(el);
       return el;
@@ -331,41 +334,44 @@
       createBurstEl(baseRot, flipX, baseScale);
       createBurstEl(baseRot + 180, -flipX, baseScale * 0.9);
     } else {
-      // Pattern 3: Spider-Verse chromatic double jitter
-      createBurstEl(baseRot, flipX, baseScale, palette.hue);
+      // Pattern 3: Double tingling jitter
+      createBurstEl(baseRot, flipX, baseScale);
       setTimeout(function () {
-        createBurstEl(baseRot + 30, -flipX, baseScale * 0.88, (parseFloat(palette.hue) + 60) + "deg");
+        createBurstEl(baseRot + 28, -flipX, baseScale * 0.88);
       }, 40);
     }
 
-    // 3. Spider-Sense inner pulse ring (random size between 65px and 90px)
+    // 2. Spider-Sense inner pulse ring (monochrome, random size between 65px and 85px)
     var ring = document.createElement("div");
     ring.className = "click-burst-ring";
     ring.style.left = x + "px";
     ring.style.top = y + "px";
-    ring.style.setProperty("--ring-color", palette.c1);
-    ring.style.setProperty("--ring-color2", palette.c2);
-    var ringMax = (68 + Math.floor(Math.random() * 22)) + "px";
+    var ringMax = (68 + Math.floor(Math.random() * 18)) + "px";
     ring.style.setProperty("--ring-max", ringMax);
     document.body.appendChild(ring);
 
-    // 4. Radiant electric comic sparks (random count, tight distances)
-    var sparkCount = 5 + Math.floor(Math.random() * 4); // 5 to 8 sparks
+    // 3. Radiant comic sparks (pure monochrome ink)
+    var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    var monochromeColors = isDark
+      ? ["#ffffff", "#ffffff", "rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.5)", "#888888"]
+      : ["#121212", "#121212", "rgba(18, 18, 18, 0.8)", "rgba(18, 18, 18, 0.5)", "#555555"];
+
+    var sparkCount = 4 + Math.floor(Math.random() * 4); // 4 to 7 sparks
     for (var i = 0; i < sparkCount; i++) {
       var spark = document.createElement("span");
       spark.className = "click-spark";
       var angle = (i / sparkCount) * Math.PI * 2 + (Math.random() * 0.5 - 0.25);
-      var dist = 14 + Math.random() * 22; // tight, reduced radius
+      var dist = 14 + Math.random() * 20; // tight, reduced radius
       var dx = Math.cos(angle) * dist;
       var dy = Math.sin(angle) * dist;
-      var size = 2 + Math.random() * 3.5;
+      var size = 2 + Math.random() * 3;
 
       spark.style.left = x + "px";
       spark.style.top = y + "px";
       spark.style.width = size + "px";
       spark.style.height = size + "px";
-      spark.style.backgroundColor = palette.sparks[Math.floor(Math.random() * palette.sparks.length)];
-      spark.style.boxShadow = "0 0 6px " + spark.style.backgroundColor;
+      spark.style.backgroundColor = monochromeColors[Math.floor(Math.random() * monochromeColors.length)];
+      spark.style.boxShadow = isDark ? "0 0 4px rgba(255, 255, 255, 0.5)" : "0 0 4px rgba(0, 0, 0, 0.25)";
       spark.style.setProperty("--dx", dx + "px");
       spark.style.setProperty("--dy", dy + "px");
 
@@ -377,7 +383,7 @@
             if (s.parentNode) s.parentNode.removeChild(s);
           };
         })(spark),
-        360
+        340
       );
     }
 
@@ -386,7 +392,7 @@
         if (b.parentNode) b.parentNode.removeChild(b);
       });
       if (ring.parentNode) ring.parentNode.removeChild(ring);
-    }, 450);
+    }, 420);
   }
 })();
 
