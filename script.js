@@ -232,5 +232,161 @@
       }
     });
   }
+
+  // 5. Inverted Negative Circle Cursor & Click Shockwave Burst
+  var cursor = document.getElementById("cursor-dot");
+  if (cursor) {
+    var hasMoved = false;
+
+    window.addEventListener("mousemove", function (e) {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+      if (!hasMoved) {
+        hasMoved = true;
+        cursor.style.opacity = "1";
+      }
+    });
+
+    document.addEventListener("mouseleave", function () {
+      cursor.style.opacity = "0";
+    });
+
+    document.addEventListener("mouseenter", function () {
+      if (hasMoved) cursor.style.opacity = "1";
+    });
+
+    // Hover effect on interactive elements: expand into inverted lens
+    var interactiveSelectors = "a, button, input, select, textarea, .pj, .swatch-pill, .social-btn, .logo, .tg, .palette-btn";
+    document.addEventListener("mouseover", function (e) {
+      if (e.target && e.target.closest && e.target.closest(interactiveSelectors)) {
+        cursor.classList.add("cursor-hover");
+      }
+    });
+
+    document.addEventListener("mouseout", function (e) {
+      if (e.target && e.target.closest && e.target.closest(interactiveSelectors)) {
+        cursor.classList.remove("cursor-hover");
+      }
+    });
+
+    // Click effect: punch cursor + spawn randomized Spider-Sense tingling burst
+    window.addEventListener("mousedown", function (e) {
+      cursor.classList.add("cursor-active");
+      spawnSpiderSense(e.clientX, e.clientY);
+    });
+
+    window.addEventListener("mouseup", function () {
+      cursor.classList.remove("cursor-active");
+    });
+  }
+
+  // Spider-Verse Colorway Palettes for randomized tingling aura
+  var spiderColorways = [
+    { c1: "#ff007f", c2: "#00f0ff", hue: "0deg", sparks: ["#ff007f", "#00f0ff", "#ffffff", "#ff2a85"] }, // Classic Comic
+    { c1: "#ff0033", c2: "#ffd700", hue: "320deg", sparks: ["#ff0033", "#ffd700", "#ff4500", "#ffffff"] }, // Miles Morales
+    { c1: "#00e5ff", c2: "#ff0055", hue: "190deg", sparks: ["#00e5ff", "#ff0055", "#00ffff", "#ff1493"] }, // Spider-Man 2099
+    { c1: "#9d00ff", c2: "#00ffcc", hue: "75deg", sparks: ["#9d00ff", "#00ffcc", "#d800ff", "#00ffff"] }, // Symbiote / Violet
+    { c1: "#ff00aa", c2: "#ffea00", hue: "290deg", sparks: ["#ff00aa", "#ffea00", "#ff66cc", "#ffffff"] }  // Spider-Punk
+  ];
+
+  function spawnSpiderSense(x, y) {
+    // 1. Pick random Spider-Verse colorway
+    var palette = spiderColorways[Math.floor(Math.random() * spiderColorways.length)];
+
+    // 2. Random pattern archetype (0: Directional Crown, 1: Opposite/Inverted Arc, 2: Dual 360 Omni-Warning, 3: Chromatic Double Jitter)
+    var patternType = Math.floor(Math.random() * 4);
+
+    // Random base angles & mirror flip
+    var baseAngles = [0, -35, 35, -65, 65, 180, -145, 145];
+    var baseRot = baseAngles[Math.floor(Math.random() * baseAngles.length)] + (Math.random() * 16 - 8);
+    var flipX = Math.random() > 0.5 ? 1 : -1;
+    var baseScale = 0.85 + Math.random() * 0.25; // 0.85 to 1.1 (tighter, reduced area)
+
+    var bursts = [];
+
+    function createBurstEl(rot, flip, sc, hueShift) {
+      var el = document.createElement("div");
+      el.className = "click-burst";
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+      el.style.setProperty("--rot", rot + "deg");
+      el.style.setProperty("--flip", flip);
+      el.style.setProperty("--scale", sc);
+      el.style.setProperty("--hue", hueShift || palette.hue);
+      el.style.setProperty("--c1", palette.c1);
+      el.style.setProperty("--c2", palette.c2);
+      document.body.appendChild(el);
+      bursts.push(el);
+      return el;
+    }
+
+    if (patternType === 0) {
+      // Pattern 0: Single directional crown alert
+      createBurstEl(baseRot, flipX, baseScale);
+    } else if (patternType === 1) {
+      // Pattern 1: Opposing wave alert
+      createBurstEl(baseRot + 180, -flipX, baseScale * 0.95);
+    } else if (patternType === 2) {
+      // Pattern 2: Dual 360° Omnidirectional warning (two opposing arcs)
+      createBurstEl(baseRot, flipX, baseScale);
+      createBurstEl(baseRot + 180, -flipX, baseScale * 0.9);
+    } else {
+      // Pattern 3: Spider-Verse chromatic double jitter
+      createBurstEl(baseRot, flipX, baseScale, palette.hue);
+      setTimeout(function () {
+        createBurstEl(baseRot + 30, -flipX, baseScale * 0.88, (parseFloat(palette.hue) + 60) + "deg");
+      }, 40);
+    }
+
+    // 3. Spider-Sense inner pulse ring (random size between 65px and 90px)
+    var ring = document.createElement("div");
+    ring.className = "click-burst-ring";
+    ring.style.left = x + "px";
+    ring.style.top = y + "px";
+    ring.style.setProperty("--ring-color", palette.c1);
+    ring.style.setProperty("--ring-color2", palette.c2);
+    var ringMax = (68 + Math.floor(Math.random() * 22)) + "px";
+    ring.style.setProperty("--ring-max", ringMax);
+    document.body.appendChild(ring);
+
+    // 4. Radiant electric comic sparks (random count, tight distances)
+    var sparkCount = 5 + Math.floor(Math.random() * 4); // 5 to 8 sparks
+    for (var i = 0; i < sparkCount; i++) {
+      var spark = document.createElement("span");
+      spark.className = "click-spark";
+      var angle = (i / sparkCount) * Math.PI * 2 + (Math.random() * 0.5 - 0.25);
+      var dist = 14 + Math.random() * 22; // tight, reduced radius
+      var dx = Math.cos(angle) * dist;
+      var dy = Math.sin(angle) * dist;
+      var size = 2 + Math.random() * 3.5;
+
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+      spark.style.width = size + "px";
+      spark.style.height = size + "px";
+      spark.style.backgroundColor = palette.sparks[Math.floor(Math.random() * palette.sparks.length)];
+      spark.style.boxShadow = "0 0 6px " + spark.style.backgroundColor;
+      spark.style.setProperty("--dx", dx + "px");
+      spark.style.setProperty("--dy", dy + "px");
+
+      document.body.appendChild(spark);
+
+      setTimeout(
+        (function (s) {
+          return function () {
+            if (s.parentNode) s.parentNode.removeChild(s);
+          };
+        })(spark),
+        360
+      );
+    }
+
+    setTimeout(function () {
+      bursts.forEach(function (b) {
+        if (b.parentNode) b.parentNode.removeChild(b);
+      });
+      if (ring.parentNode) ring.parentNode.removeChild(ring);
+    }, 450);
+  }
 })();
 
